@@ -32,7 +32,6 @@ void doc_file_hv(DSHV& ds_hv)
 		getline(filein, x->ho, ',');
 		getline(filein, x->ten, ',');
 		getline(filein, x->phai, '\n');
-		//getline(filein, x->ho, '\n') ;
 		them_1_hv(ds_hv.TREE, x);
 		ds_hv.sl++;
 	}

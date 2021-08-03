@@ -5,6 +5,7 @@
 #include <ctime>
 #include <conio.h>
 #include <fstream>
+#include<vector>
 using namespace std;
 
 //============quan ly diem=========
@@ -35,7 +36,7 @@ struct HocVien
 	string ten;
 	string phai;
 	//*qllh
-	DIEM DSDiem;
+	vector<DIEM> ds_diem;
 	//pointer
 	HocVien* pleft;
 	HocVien* pright;
@@ -53,7 +54,7 @@ struct LopHoc
 {
 	//data
 	string malop;
-	char trangthai; //0: lop chuan bi mo, 1: lop dang hoc, 2: lop da hoan thanh)
+	string trangthai; //0: lop chuan bi mo, 1: lop dang hoc, 2: lop da hoan thanh)
 	//*qllh
 	tree DSHocVien;
 	//pointer
@@ -63,6 +64,7 @@ typedef struct LopHoc LH;
 struct DSLopHoc
 {
 	LH* phead = NULL;
+	LH* ptail = NULL;
 	int sl = 0;
 };
 typedef struct DSLopHoc DSLH;

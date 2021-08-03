@@ -147,7 +147,58 @@ void hieu_chinh_cl(DSCL ds_cl)
 	}
 
 }
-//==========================================Nhap nhan vien==============================================
+//==========================================Them lop hoc===========================
+LH* KhoiTaoNode(LH lh)
+{
+	LH* p = new LH;
+	if (p == NULL)
+	{
+		cout << "\n khong du bo nho";
+		return NULL;
+	}
+	p->malop = lh.malop;
+	p->trangthai = lh.trangthai;
+	p->pnext = NULL;
+	return p;
+}
+void them_vao_cuoi(DSLH& ds_lh, LH* p)
+{
+	if (ds_lh.phead == NULL)
+	{
+		ds_lh.phead = p;
+	}
+	else
+	{
+		for (LH* k = ds_lh.phead; ;k = k->pnext)
+		{
+			if (k->pnext == NULL)
+			{
+				k->pnext = p;
+				break;
+			}
+		}
+	}
+}
+void them_lop_hoc(LH& lh, DSLH &ds_lh)
+{
+	cout << "\nNhap ma lop hoc can them: ";
+	cin >> lh.malop;
+	cout << "\nNhap trang thai lop hoc (0: lop chuan bi mo, 1: lop dang hoc, 2: lop da hoan tat): ";
+	cin >> lh.trangthai;
+	 
+	LH* p = KhoiTaoNode(lh);
+	them_vao_cuoi(ds_lh, p);
+}
+void xuat_lop_hoc(DSLH ds_lh)
+{
+	for (LH *k = ds_lh.phead; k != NULL; k = k->pnext)
+	{
+		cout << "Ma lop: " << k->malop << endl;
+		cout << "Trang thai: " << k->trangthai << endl;
+		cout << "aaaaaa";
+	}
+}
+//==========================================Nhap hoc vien==============================================
 void nhap_hoc_vien(DSHV &ds_hv)
 {
 	HocVien *p = khoi_tao_node_hoc_vien();
@@ -409,6 +460,8 @@ void menu()
 	//=====khia boa bien ==
 	DSCL ds_cl;
 	DSHV ds_hv;
+	DSLH ds_lh;
+	LH lh;
 	bool kt = true;
 
 	//=====load file=====
@@ -420,15 +473,21 @@ void menu()
 		//=================
 		
 		//===============
+		cout << "=========== Quan ly cap lop ==============" << endl;
 		cout << "1. Them cap lop. " << endl;
 		cout << "2. Xuat danh sach cap lop. " << endl;
 		cout << "3. Xoa cap lop. " << endl;
 		cout << "4. Hieu chinh cap lop. " << endl;
+		cout << "=========== Quan ly hoc vien ==============" << endl;
 		cout << "5. Nhap hoc vien. " << endl;
 		cout << "6. In danh sach hoc vien. " << endl;
 		cout << "7. Xoa hoc vien. " << endl;
 		cout << "8. Hieu chinh thong tin hoc vien. " << endl;
+		cout << "=========== Quan ly diem ==============" << endl;
 		cout << "9. Nhap diem hoc vien. " << endl;
+		cout << "=========== Quan ly lop hoc ==============" << endl;
+		cout << "10. Them lop hoc. " << endl;
+		cout << "11. Xuat danh sach lop hoc. " << endl;
 
 		cout << "0. Thoat" << endl;
 		int luachon;
@@ -502,6 +561,18 @@ void menu()
 		case 8:
 		{
 			hieu_chinh_hv(ds_hv);
+			system("pause");
+			break;
+		}
+		case 10:
+		{
+			them_lop_hoc(lh, ds_lh);
+			system("pause");
+			break;
+		}
+		case 12:
+		{
+			xuat_lop_hoc(ds_lh);
 			system("pause");
 			break;
 		}
