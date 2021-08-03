@@ -24,15 +24,15 @@ void doc_file_hv(DSHV& ds_hv)
 {
 	ifstream filein;
 	filein.open("DSHV.txt", ios_base::in);
-	while (!filein.eof())
+	while (filein.eof() != true)
 	{
 		HocVien* x = khoi_tao_node_hoc_vien();
 		filein >> x->mahocvien;		
 		filein.ignore();
 		getline(filein, x->ho, ',');
 		getline(filein, x->ten, ',');
-		getline(filein, x->phai, ',');
-		getline(filein, x->ho, '\n');
+		getline(filein, x->phai, '\n');
+		//getline(filein, x->ho, '\n') ;
 		them_1_hv(ds_hv.TREE, x);
 		ds_hv.sl++;
 	}

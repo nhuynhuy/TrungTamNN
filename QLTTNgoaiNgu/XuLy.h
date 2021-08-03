@@ -15,12 +15,15 @@ void hieu_chinh_cl(DSCL ds_cl);
 //void them_1_hv(tree t, HocVien* p);
 int tao_ma_hv(tree t);
 bool kt_ma_hv_trung(tree t, int ma);
-void xoa_nhan_vien(DSHV& ds_hv);
-void hoan_vi_2_hv(HocVien* a, HocVien* b);
-void xoa_1_nv(tree t, int ma);
-void node_the_mang(tree& t, HocVien*& x);
+//void xoa_hoc_vien(DSHV& ds_hv);
+//void hoan_vi_2_hv(HocVien* a, HocVien* b);
+//void xoa_1_hv(tree &t, int ma);
+//void node_the_mang(tree& t, HocVien*& x);
 void hieu_chinh_hv(DSHV& ds_hv);
 void hieu_chinh_1_hv(tree t, int ma);
+//=======================Diem============================
+DIEM* khoi_tao_node_diem();
+HocVien* kt_ma_hv(tree t, int ma);
 //================them cap lop======================================
 void them_cap_lop(DSCL& ds_cl)
 {
@@ -83,7 +86,7 @@ void xuat_ds_cap_lop(DSCL ds_cl)
 		cout << "Hoc phi: " << ds_cl.ds[i]->hocphi << endl;
 	}
 }
-//=========xoa cap lop=====================================================
+//===================================Xoa cap lop=====================================================
 void xoa_cap_lop(DSCL ds_cl)
 {
 	string a;
@@ -118,7 +121,7 @@ int kt_ma_cl(string a, DSCL ds_cl)
 	}
 	return -1;
 }
-//===============hieu chinh cap lop==============================================
+//=========================================hieu chinh cap lop==============================================
 void hieu_chinh_cl(DSCL ds_cl)
 {
 	string a;
@@ -144,8 +147,7 @@ void hieu_chinh_cl(DSCL ds_cl)
 	}
 
 }
-//==============Nhap nhan vien==============================================
-
+//==========================================Nhap nhan vien==============================================
 void nhap_hoc_vien(DSHV &ds_hv)
 {
 	HocVien *p = khoi_tao_node_hoc_vien();
@@ -154,6 +156,7 @@ void nhap_hoc_vien(DSHV &ds_hv)
 	cout << "Nhap ten: " << endl; getline(cin, p->ten);
 	cout << "Nhap phai: " << endl; getline(cin, p->phai);
 	p->mahocvien = tao_ma_hv(ds_hv.TREE);
+	cout << p->mahocvien;
 	them_1_hv(ds_hv.TREE, p);
 	ds_hv.sl++;
 }
@@ -191,48 +194,61 @@ bool kt_ma_hv_trung(tree t, int ma)
 		}
 	}
 }
-//========================In danh sach hoc vien===================
+//====================================In danh sach hoc vien===========================
 void in_ds_hoc_vien(tree t)
 {
+
 	if (t!=NULL)
 	{
 		in_ds_hoc_vien(t->pleft);
-		cout << "=======Hoc Vien==========" << endl;
-		cout << t->mahocvien << endl;
-		cout << t->ho << endl;
-		cout << t->ten << endl;
-		cout << t->phai << endl;
+		cout << "=======Hoc Vien=========" << endl;
+		cout <<"Ma hoc vien: "<< t->mahocvien << endl;
+		cout <<"Ho: "<< t->ho << endl;
+		cout <<"Ten: "<< t->ten << endl;
+		cout <<"Phai: "<< t->phai << endl;
 		in_ds_hoc_vien(t->pright);
 	}
-	
 }
-//===============xoa nhan vien============================================
-void xoa_nhan_vien(DSHV &ds_hv)
+//===============================Xoa hoc vien============================================
+void node_the_mang(HocVien *&x, HocVien *&y)
 {
-	int a;
-	cout << "Nhap ma hoc vien: "; cin >> a;
-	bool kt = kt_ma_hv_trung(ds_hv.TREE, a);
-	if (kt == true)
+	if (y->pleft == NULL)
 	{
-		xoa_1_nv(ds_hv.TREE, a);
-		ds_hv.sl--;
-		cout << "Da xoa thanh cong" << endl;
-		system("pause");
+		node_the_mang(x, y->pleft);
 	}
 	else
 	{
-		cout << "Ma nhan vie khong ton tai. ";
-	}
-	system("pause");
+		x->mahocvien = y->mahocvien;
+		x->ho = y->ho;
+		x->ten = y->ten;
+		x->phai = y->phai;
 
+		x = y;
+
+		y = y->pright;
+	}
 }
-void xoa_1_nv(tree t, int ma)
+void xoa_1_hoc_vien(tree &t, int data)
 {
-	if (t != NULL)
+	
+	if (t == NULL)
 	{
-		if (t->mahocvien == ma)
+		return;
+	}
+	else
+	{
+		if (data > t->mahocvien)
 		{
-			HocVien* x = t; // x se luu node can giai phong
+			xoa_1_hoc_vien(t->pright, data);
+
+		}
+		else if (data < t->mahocvien)
+		{
+			xoa_1_hoc_vien(t->pleft, data);
+		}
+		else
+		{
+			HocVien* x = t;
 			if (t->pleft == NULL)
 			{
 				t = t->pright;
@@ -241,58 +257,32 @@ void xoa_1_nv(tree t, int ma)
 			{
 				t = t->pleft;
 			}
-			else if (t->pleft != NULL && t->pright != NULL);
+			else
 			{
-				//trai cung cay con phai
-				node_the_mang(t->pright, x);
+				node_the_mang(x, t->pright);
 			}
-			delete x;
 		}
-	}
-	else if (t->mahocvien < ma)
-	{
-		xoa_1_nv(t->pright, ma);
-	}
-	else if (t->mahocvien > ma)
-	{
-		xoa_1_nv(t->pleft, ma);
 	}
 
 }
-void hoan_vi_2_hv(HocVien *a, HocVien *b)
+void xoa_hoc_vien(DSHocVien &ds_hv)
 {
-	HocVien* tam = new HocVien;
-	tam->mahocvien = a->mahocvien;
-	tam->ho = a->ho;
-	tam->ten = a->ten;
-	tam->phai = a->phai;
-	tam->DSDiem = a->DSDiem;
-	//===================
-	a->mahocvien = b->mahocvien;
-	a->ho = b->ho;
-	a->ten = b->ten;
-	a->phai = b->phai;
-	a->DSDiem = b->DSDiem;
-	//==========
-	b->mahocvien = tam->mahocvien;
-	b->ho = tam->ho;
-	b->ten = tam->ten;
-	b->phai = tam->phai;
-	b->DSDiem = tam->DSDiem;
-	delete tam;
-}
-void node_the_mang(tree &t, HocVien *&x)
-{
-	if (t->pleft != NULL)
+	int data;
+	cout << "Nhap phan tu can xoa: ";
+	cin >> data;
+	bool kt = kt_ma_hv_trung(ds_hv.TREE, data);
+	if (kt == true)
 	{
-		node_the_mang(t->pleft,x);
+		xoa_1_hoc_vien(ds_hv.TREE, data);
+		ds_hv.sl--;
+		cout << "Da xoa thanh cong" << endl;
+		system("pause");
 	}
-	else // trai cungf
+	else
 	{
-		hoan_vi_2_hv(t, x);
-		x = t; 
-		t = t->pright;
+		cout << "Ma hoc vien khong ton tai. ";
 	}
+	system("pause");
 }
 //==================Hieu chinh hoc vien =========================================
 void hieu_chinh_hv(DSHV &ds_hv)
@@ -317,7 +307,7 @@ void hieu_chinh_1_hv(tree t, int ma)
 		if (t->mahocvien == ma)
 		{
 			cin.ignore();
-			cout << "Nhap ma: "; getline(cin, t->ho);
+			cout << "Nhap ho: "; getline(cin, t->ho);
 			cout << "Nhap ten: "; getline(cin, t->ten);
 			cout << "Nhap phai: "; getline(cin, t->phai);
 					
@@ -333,22 +323,103 @@ void hieu_chinh_1_hv(tree t, int ma)
 		}
 	}
 }
-//============================DOC GHI FILE NHAN VIEN =============================
+//============================Nhap diem hoc vien =============================
+void nhap_diem(DSHV& ds_hv)
+{
+	int a;
+	cout << "Nhap ma sinh vien can nhap diem"; cin >> a;
+	HocVien* tam = kt_ma_hv(ds_hv.TREE, a);
+	if (tam == NULL)
+	{
+		cout << "Ma hoc vien khong ton tai" << endl;
 
+	}
+	else
+	{
+		DIEM* p = khoi_tao_node_diem();
+		DIEM dn;
+		cout << "Nhap ki nang can nhap diem: ";
+		cout << "0. Nghe " << endl;
+		cout << "1. Noi " << endl;
+		cout << "2. Doc " << endl;
+		cout << "3. Viet" << endl;
+		cout << "Ki nang: ";
+		int x; cin >> x;
+		bool ktd = true;
+		switch (x)
+		{
+		case 0:
+		{
+			cout << "Nhap diem nghe: ";
+			cin >> dn.kn_nghe;
+		}
+		case 1:
+		{
+			cout << "Nhap diem noi: ";
+			cin >> dn.kn_noi;
+		}
+		case 2:
+		{
+			cout << "Nhap diem doc: ";
+			cin >> dn.kn_doc;
+		}
+		case 3:
+		{
+			cout << "Nhap diem viet: ";
+			cin >> dn.kn_viet;
+		}
+		default:
+			break;
+		}
+
+
+	}
+}
+DIEM * khoi_tao_node_diem()
+{
+	DIEM* p = new DIEM;
+	p->pnext = NULL;
+	return p;
+}
+HocVien* kt_ma_hv(tree t, int ma)
+{
+	if (t != NULL)
+	{
+		if (t->mahocvien == ma)
+		{
+			return t;
+		}
+		else if (t->mahocvien < ma)
+		{
+			kt_ma_hv(t->pright, ma);
+		}
+		else if (t->mahocvien > ma);
+		{
+			kt_ma_hv(t->pleft,ma);
+		}
+	}
+	else
+	{
+		return NULL;
+	}
+}
 //======================================
 void menu()
 {
-
 	//=====khia boa bien ==
 	DSCL ds_cl;
 	DSHV ds_hv;
 	bool kt = true;
+
 	//=====load file=====
 	doc_file_dscl(ds_cl);
 	doc_file_hv(ds_hv);
 	//==============
 	while (kt)
 	{
+		//=================
+		
+		//===============
 		cout << "1. Them cap lop. " << endl;
 		cout << "2. Xuat danh sach cap lop. " << endl;
 		cout << "3. Xoa cap lop. " << endl;
@@ -357,6 +428,8 @@ void menu()
 		cout << "6. In danh sach hoc vien. " << endl;
 		cout << "7. Xoa hoc vien. " << endl;
 		cout << "8. Hieu chinh thong tin hoc vien. " << endl;
+		cout << "9. Nhap diem hoc vien. " << endl;
+
 		cout << "0. Thoat" << endl;
 		int luachon;
 		cout << "   Nhap lua chon : "; cin >> luachon;
@@ -423,8 +496,7 @@ void menu()
 		}
 		case 7:
 		{
-			xoa_nhan_vien(ds_hv);
-			system("pause");
+			xoa_hoc_vien(ds_hv);
 			break;
 		}
 		case 8:

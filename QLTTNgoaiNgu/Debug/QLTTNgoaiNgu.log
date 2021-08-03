@@ -1,8 +1,9 @@
 ﻿  Main.cpp
 D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\linhTinh.h(16,20): warning C4018: '<': signed/unsigned mismatch
 D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\linhTinh.h(29,20): warning C4018: '<': signed/unsigned mismatch
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(49,20): warning C4018: '<': signed/unsigned mismatch
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(242,51): warning C4390: ';': empty controlled statement found; is this the intent?
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(53,20): warning C4018: '<': signed/unsigned mismatch
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(396,30): warning C4390: ';': empty controlled statement found; is this the intent?
 D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\Main.cpp(6,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(192): warning C4715: 'kt_ma_hv_trung': not all control paths return a value
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(196): warning C4715: 'kt_ma_hv_trung': not all control paths return a value
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(405): warning C4715: 'kt_ma_hv': not all control paths return a value
   QLTTNgoaiNgu.vcxproj -> D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\Debug\QLTTNgoaiNgu.exe

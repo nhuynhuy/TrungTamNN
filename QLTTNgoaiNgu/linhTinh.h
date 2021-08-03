@@ -53,7 +53,7 @@ HocVien* khoi_tao_node_hoc_vien()
 	p->pright = NULL;
 	return p;
 }
-void them_1_hv(tree t, HocVien* p)
+void them_1_hv(tree &t, HocVien* p)
 {
 	if (t == NULL)
 	{

@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include<string>
+#include <string>
 #include <cstdlib>
 #include <ctime>
 #include <conio.h>
@@ -11,7 +11,10 @@ using namespace std;
 struct Diem
 {
 	string ma_HV;
-	char ky_nang; //nghe noi doc viet  1 2 3 4
+	int kn_nghe;
+	int kn_noi;
+	int kn_doc;
+	int kn_viet;//nghe noi doc viet  1 2 3 4
 
 	Diem* pnext;
 };
@@ -36,7 +39,6 @@ struct HocVien
 	//pointer
 	HocVien* pleft;
 	HocVien* pright;
-
 };
 typedef struct HocVien* tree;
 
@@ -62,7 +64,6 @@ struct DSLopHoc
 {
 	LH* phead = NULL;
 	int sl = 0;
-
 };
 typedef struct DSLopHoc DSLH;
 
