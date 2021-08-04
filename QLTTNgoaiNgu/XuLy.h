@@ -188,14 +188,110 @@ void them_lop_hoc(LH& lh, DSLH &ds_lh)
 	 
 	LH* p = KhoiTaoNode(lh);
 	them_vao_cuoi(ds_lh, p);
+	ds_lh.sl++;
 }
+//==================================in danh sach lop hoc==================================
 void xuat_lop_hoc(DSLH ds_lh)
 {
-	for (LH *k = ds_lh.phead; k != NULL; k = k->pnext)
+	if (ds_lh.phead == NULL)
 	{
-		cout << "Ma lop: " << k->malop << endl;
-		cout << "Trang thai: " << k->trangthai << endl;
-		cout << "aaaaaa";
+		cout << "Danh sach lop hoc rong.";
+	}
+	else 
+	{
+		for (LH* k = ds_lh.phead; k != NULL; k = k->pnext)
+		{
+			cout << "Ma lop: " << k->malop << endl;
+			cout << "Trang thai: " << k->trangthai << endl;
+		}
+	}
+}
+//===============================Xoa lop hoc =======================================
+void XoaDau(DSLH& ds_lh)
+{
+	if (ds_lh.phead == NULL)
+	{
+		return;
+	}
+	LH* p = ds_lh.phead;
+	ds_lh.phead = ds_lh.phead->pnext;
+	delete p;
+}
+void XoaCuoi(DSLH& ds_lh)
+{
+	if (ds_lh.phead == NULL)
+	{
+		return;
+	}
+	if (ds_lh.phead->pnext == NULL)
+	{
+		XoaDau(ds_lh);
+		return;
+	}
+	for (LH* k = ds_lh.phead; k != NULL; k = k->pnext)
+	{
+		if (k->pnext == ds_lh.ptail)
+		{
+			delete ds_lh.ptail;
+			k->pnext = NULL;
+			ds_lh.ptail = k;
+			return;
+		}
+	}
+}
+void xoa_1_lop_hoc(DSLH &ds_lh, string x)
+{
+	if (ds_lh.phead == NULL)
+	{
+		return;
+	}
+	if (ds_lh.phead->malop == x && ds_lh.phead->pnext == NULL)
+	{
+		XoaDau(ds_lh);
+	}
+	if (ds_lh.ptail->malop == x)
+	{
+		XoaCuoi(ds_lh);
+	}
+	LH* g = new LH;
+	LH* k = new LH;
+	for ( k = ds_lh.phead; k != NULL; k = k->pnext)
+	{
+		if (k->malop == x)
+		{
+			g->pnext = k->pnext;
+			delete k;
+			return;
+		}
+		g = k;
+	}
+}
+bool kt_ma_LH_trung(DSLH ds_lh, string ma) {
+	for (LH* k = ds_lh.phead; k != NULL; k = k->pnext)
+	{
+		if (k->malop == ma)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+void xoa_lop_hoc(DSLH ds_lh)
+{
+	string x;
+	cout << "Nhap ma lop can xoa: ";
+	cin >> x;
+	bool kt = kt_ma_LH_trung(ds_lh, x);
+	if (kt == true)
+	{
+		xoa_1_lop_hoc(ds_lh,x);
+		ds_lh.sl--;
+		cout << "\nDa xoa thanh cong! ";
+		system("pause");
+	}
+	else
+	{
+		cout << "Ma lop hoc khong ton tai! ";
 	}
 }
 //==========================================Nhap hoc vien==============================================
@@ -473,6 +569,7 @@ void menu()
 		//=================
 		
 		//===============
+		system("cls");
 		cout << "=========== Quan ly cap lop ==============" << endl;
 		cout << "1. Them cap lop. " << endl;
 		cout << "2. Xuat danh sach cap lop. " << endl;
@@ -488,6 +585,7 @@ void menu()
 		cout << "=========== Quan ly lop hoc ==============" << endl;
 		cout << "10. Them lop hoc. " << endl;
 		cout << "11. Xuat danh sach lop hoc. " << endl;
+		cout << "12. Xoa lop hoc. " << endl;
 
 		cout << "0. Thoat" << endl;
 		int luachon;
@@ -570,13 +668,19 @@ void menu()
 			system("pause");
 			break;
 		}
-		case 12:
+		case 11:
 		{
 			xuat_lop_hoc(ds_lh);
 			system("pause");
 			break;
 		}
-		case 0:
+		case 12:
+		{
+			xoa_lop_hoc(ds_lh);
+			system("pause");
+			break;
+		}
+		default:
 		{
 			kt = false;
 			break;
