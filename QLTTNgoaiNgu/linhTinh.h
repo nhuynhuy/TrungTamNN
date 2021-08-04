@@ -71,3 +71,34 @@ void them_1_hv(tree &t, HocVien* p)
 		}
 	}
 }
+LH* KhoiTaoNode(LH lh)
+{
+	LH* p = new LH;
+	if (p == NULL)
+	{
+		cout << "\n khong du bo nho";
+		return NULL;
+	}
+	p->malop = lh.malop;
+	p->trangthai = lh.trangthai;
+	p->pnext = NULL;
+	return p;
+}
+void them_vao_cuoi(DSLH& ds_lh, LH* p)
+{
+	if (ds_lh.phead == NULL)
+	{
+		ds_lh.phead = p;
+	}
+	else
+	{
+		for (LH* k = ds_lh.phead; ; k = k->pnext)
+		{
+			if (k->pnext == NULL)
+			{
+				k->pnext = p;
+				break;
+			}
+		}
+	}
+}

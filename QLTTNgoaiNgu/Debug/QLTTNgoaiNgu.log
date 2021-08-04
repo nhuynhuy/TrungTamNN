@@ -1,10 +1,10 @@
 ﻿  Main.cpp
 D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\linhTinh.h(16,20): warning C4018: '<': signed/unsigned mismatch
 D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\linhTinh.h(29,20): warning C4018: '<': signed/unsigned mismatch
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(53,20): warning C4018: '<': signed/unsigned mismatch
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(251,15): warning C4553: '==': result of expression not used; did you intend '='?
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(547,30): warning C4390: ';': empty controlled statement found; is this the intent?
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(56,20): warning C4018: '<': signed/unsigned mismatch
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(335,22): warning C4018: '<': signed/unsigned mismatch
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(531,30): warning C4390: ';': empty controlled statement found; is this the intent?
 D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\Main.cpp(6,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(347): warning C4715: 'kt_ma_hv_trung': not all control paths return a value
-D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(556): warning C4715: 'kt_ma_hv': not all control paths return a value
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(366): warning C4715: 'kt_ma_hv_trung': not all control paths return a value
+D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\QLTTNgoaiNgu\XuLy.h(540): warning C4715: 'kt_ma_hv': not all control paths return a value
   QLTTNgoaiNgu.vcxproj -> D:\CTDL\De Tai CTDL\QLTTNgoaiNgu\Debug\QLTTNgoaiNgu.exe

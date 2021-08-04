@@ -1,0 +1,8 @@
+CL01, Sennior, 20, 50000,
+CL02, Sennior, 30, 60000,
+CL03, Sennior, 40, 70000,
+CL04, Sennior, 50, 8000,
+CL05,Beginner,115,150000,
+CL09,a,a,2,
+CL10,a,a,3,
+CL11,a,a,3,

@@ -11,11 +11,8 @@ using namespace std;
 //============quan ly diem=========
 struct Diem
 {
-	string ma_HV;
-	int kn_nghe;
-	int kn_noi;
-	int kn_doc;
-	int kn_viet;//nghe noi doc viet  1 2 3 4
+	int ki_nang;
+	int diem_so;//nghe noi doc viet  1 2 3 4
 
 	Diem* pnext;
 };
@@ -23,6 +20,7 @@ typedef struct Diem DIEM;
 struct DSDiem
 {
 	DIEM* phead = NULL;
+	DIEM* ptail = NULL;
 	int sl = 0;
 };
 typedef struct DSDiem DSD;
@@ -31,12 +29,12 @@ typedef struct DSDiem DSD;
 struct HocVien
 {
 	//data
-	int mahocvien;
+	string mahocvien;
 	string ho;
 	string ten;
 	string phai;
 	//*qllh
-	vector<DIEM> ds_diem;
+	DIEM dslk_diem;
 	//pointer
 	HocVien* pleft;
 	HocVien* pright;
@@ -54,7 +52,7 @@ struct LopHoc
 {
 	//data
 	string malop;
-	string trangthai; //0: lop chuan bi mo, 1: lop dang hoc, 2: lop da hoan thanh)
+	int trangthai; //0: lop chuan bi mo, 1: lop dang hoc, 2: lop da hoan thanh)
 	//*qllh
 	tree DSHocVien;
 	//pointer
@@ -63,6 +61,7 @@ struct LopHoc
 typedef struct LopHoc LH;
 struct DSLopHoc
 {
+	LopHoc *data;
 	LH* phead = NULL;
 	LH* ptail = NULL;
 	int sl = 0;
