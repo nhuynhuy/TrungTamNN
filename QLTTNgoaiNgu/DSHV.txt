@@ -1,7 +1,8 @@
-HV2354,Nguyen Van,A,Nam,,
-HV3455,Hoang Anh,Minh,Nu,,
-HV4355,Nguyen Van,B,Nam,,
-HV4554,Phan Thi Nguyet,Nhi,Nu,,
-HV6435,Tran Dinh,Chien,Nam,,
-HV6765,tran,minh,nu,
-HV8054,tran,nhi,nu,,
+HV2354,Nguyen Van,A,Nam
+HV3455,Hoang Anh,Minh,Nu
+HV4048,Phan,Nhim,nu
+HV4355,Nguyen Van,B,Nam
+HV4554,Phan Thi Nguyet,Nhi,Nu
+HV6435,Tran Dinh,Chien,Nam
+HV6765,tran,minh,nu
+HV8054,tran,nhi,nu

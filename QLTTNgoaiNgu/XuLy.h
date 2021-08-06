@@ -7,7 +7,7 @@ string tao_ma_cl(DSCL ds_cl);
 int kt_trung_cl(string a, DSCL ds_cl);
 int kt_ma_cl(string a, DSCL ds_cl);
 void xuat_ds_cap_lop(DSCL ds_cl);
-void xoa_cap_lop(DSCL ds_cl);
+//void xoa_cap_lop(DSCL ds_cl);
 void hieu_chinh_cl(DSCL ds_cl);
 //=================QUAN LY HOV VIEN================
 //HocVien* khoi_tao_node_hoc_vien();
@@ -25,28 +25,98 @@ void hieu_chinh_1_hv(tree t, string ma);
 //DIEM* khoi_tao_node_diem();
 //HocVien* kt_ma_hv(tree t, string ma);
 void nhap_diem_1_hoc_vien(tree t, string ma);
+
+//================================QUAN LY CAP LOP==================================
 //================them cap lop======================================
+int kt_trung_cl(string a, DSCL ds_cl)
+{
+	for (int i = 0; i < ds_cl.sl; i++)
+	{
+		if (ds_cl.ds[i]->macaplop == a)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+bool kt_trung_cap_lop(string a, DSCL ds_cl)
+{
+	for (int i = 0; i < ds_cl.sl; i++)
+	{
+		if (ds_cl.ds[i]->macaplop == a)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+//======duyet cap lop trung thi xoa========
+void xoa_cap_lop_trung(DSCL &ds_cl)
+{
+
+	for (int i = 0; i < ds_cl.sl-1; i++)
+	{
+		for (int j = i + 1; j < ds_cl.sl ; i++)
+		{
+			if(ds_cl.ds[i] == ds_cl.ds[j])
+			{
+				ds_cl.ds[j]->macaplop = ds_cl.ds[j + 1]->macaplop;
+				ds_cl.ds[j]->tencaplop = ds_cl.ds[j + 1]->tencaplop;
+				ds_cl.ds[j]->sotiethoc = ds_cl.ds[j + 1]->sotiethoc;
+				ds_cl.ds[j]->hocphi = ds_cl.ds[j + 1]->hocphi;
+				CL* tam = ds_cl.ds[ds_cl.sl - 1];
+			}
+		}
+	}
+}
+//=================================
 void them_cap_lop(DSCL& ds_cl)
 {
 	CL* p = new CL;
+	string x;
+	string y;
 	//p->macaplop = tao_ma_cl(ds_cl);
-	cout << "Nhap ma cap lop: ";
+	
 	cin.ignore();
-	getline(cin, p->macaplop);
-	cout << "Nhap ten cap lop: ";
-	getline(cin, p->tencaplop);
-	cout << "Nhap so tiet hoc: ";
-	cin >> p->sotiethoc;
-	cout << "Nhap hoc phi : ";
-	cin >> p->hocphi;
+	bool ktt = true;
+	while (ktt == true)
+	{
+		cout << "Nhap ma cap lop: ";
+		cin >> x;
+		bool kt = kt_trung_cap_lop(x, ds_cl);
+		if (kt == true)
+		{
+			cout << "Cap lop da ton tai!" << endl;
+			continue;
+		}
+		else {
+			p->macaplop = x;
+			cout << "Nhap ten cap lop: ";
+			cin >> y;
+			p->tencaplop = y;
+			cout << "Nhap so tiet hoc: ";
+			cin >> p->sotiethoc;
+			cout << "Nhap hoc phi : ";
+			cin >> p->hocphi;
+			ds_cl.ds[ds_cl.sl] = p;
+			ds_cl.sl++;
+			break;
+		}
+	}
+	
 	//=============chuan hoa chu=========
-	chuan_hoa_chu(p->macaplop);
-	chuan_hoa_chu(p->tencaplop);
-	ds_cl.ds[ds_cl.sl] = p;
-	ds_cl.sl++;
-
-	ofstream fileout;
-	ghi_file_DSCL(fileout, ds_cl);
+	/*chuan_hoa_chu(p->macaplop);
+	chuan_hoa_chu(p->tencaplop);*/
+	int xac_nhan;
+	cout << "Ban co muon ghi vao file khong ?" << endl;
+	cout << "0: Khong          1: Co" << endl;
+	cout << "Chon :";
+	cin >> xac_nhan;
+	if (xac_nhan == 1)
+	{
+		ofstream fileout;
+		ghi_file_DSCL(fileout, ds_cl);
+	}
 	system("pause");
 }
 string tao_ma_cl(DSCL ds_cl)
@@ -62,17 +132,7 @@ string tao_ma_cl(DSCL ds_cl)
 	} while (kt_trung_cl(a, ds_cl) >= 0);
 	return a;
 }
-int kt_trung_cl(string a, DSCL ds_cl)
-{
-	for (int i = 0; i < ds_cl.sl; i++)
-	{
-		if (ds_cl.ds[i]->macaplop == a)
-		{
-			return i;
-		}
-	}
-	return -1;
-}
+
 //=========xuat ds cap lop=============
 void xuat_ds_cap_lop(DSCL ds_cl)
 {
@@ -91,66 +151,93 @@ void xuat_ds_cap_lop(DSCL ds_cl)
 	}
 }
 //===================================Xoa cap lop=====================================================
-void xoa_cap_lop(DSCL ds_cl)
+void xoa_1_cap_lop(DSCL& ds_cl)
 {
 	string a;
 	cout << "Nhap ma cap lop: ";
-	cin >> a;	chuan_hoa_chu(a);
+	cin >> a;	//chuan_hoa_chu(a);
 	int cl = kt_ma_cl(a, ds_cl);
-
+	cout << ds_cl.sl;
 	if (cl < 0) {
-		cout << "Vat tu khong ton tai" << endl;
+		cout << "Cap lop khong ton tai" << endl;
 		system("pause");
 	}
-	for (int i = 0; i < ds_cl.sl - 1; i++)
+	cout << cl;
+	for (int i = cl; i < ds_cl.sl - 1; i++)
 	{
+
 		ds_cl.ds[i]->macaplop = ds_cl.ds[i + 1]->macaplop;
 		ds_cl.ds[i]->tencaplop = ds_cl.ds[i + 1]->tencaplop;
 		ds_cl.ds[i]->sotiethoc = ds_cl.ds[i + 1]->sotiethoc;
 		ds_cl.ds[i]->hocphi = ds_cl.ds[i + 1]->hocphi;
 	}
-	CL* tam = ds_cl.ds[ds_cl.sl - 1];
+	//ds_cl.ds[ds_cl.sl] = ds_cl.ds[ds_cl.sl - 1];
+	//free(tam);
 	ds_cl.sl--;
+	cout << ds_cl.sl;
+}
+void xoa_cap_lop(DSCL& ds_cl)
+{
+
+	xoa_1_cap_lop(ds_cl);
+
 	cout << "Da xoa thanh cong";
 	system("pause");
 }
-int kt_ma_cl(string a, DSCL ds_cl)
-{
-	for (int i = 0; i < ds_cl.sl; i++)
-	{
-		if (ds_cl.ds[i]->macaplop == a)
-		{
-			return i;
-		 }
-	}
-	return -1;
-}
+//int kt_ma_cl(string a, DSCL ds_cl)== ben linhtinh.h==
 //=========================================hieu chinh cap lop==============================================
+void hieu_chinh_1_cap_lop(DSCL& ds_cl)
+{
+	string x;
+	string y;
+	//p->macaplop = tao_ma_cl(ds_cl);
+
+	//cin.ignore();
+	bool ktt = true;
+	cout << "Nhap ma cap lop can hieu chinh: ";
+	cin >> x;
+	int cl = kt_ma_cl(x, ds_cl);
+	while (ktt == true)
+	{
+		
+		if (cl < 0 )
+		{
+			cout << "Cap lop khong ton tai!" << endl;
+			continue;
+		}
+		else {
+
+			cout << "\nNhap ten cap lop: " ;
+			cin.ignore();
+			getline(cin, ds_cl.ds[cl]->tencaplop);
+			cout << "\nNhap so tiet hoc: " ;
+			getline(cin, ds_cl.ds[cl]->sotiethoc);
+			cout << "\nNhap hoc phi: " ;
+			cin >> ds_cl.ds[cl]->hocphi;
+			cout << "\nDa thay doi cap lop. " << endl;
+			system("pause");
+			break;
+		}
+	}
+	int xac_nhan;
+	cout << "Ban co muon ghi vao file khong ?" << endl;
+	cout << "0: Khong          1: Co" << endl;
+	cout << "Chon :";
+	cin >> xac_nhan;
+	if (xac_nhan == 1)
+	{
+		ofstream fileout;
+		ghi_file_DSCL(fileout, ds_cl);
+	}
+}
 void hieu_chinh_cl(DSCL ds_cl)
 {
-	string a;
-	cout << "Nhap ma cap lop can hieu chinh: " << endl;
-	cin >> a;
-	//=====kiem tra========================
-	int cl = kt_trung_cl(a, ds_cl);
-	if (cl < 0)
-	{
-		cout << "Ma khong ton tai." << endl;
-		system("pause");
-	}
-	else
-	{
-		cout << "Nhap ten cap lop: " << endl;
-		getline(cin, ds_cl.ds[cl]->tencaplop);
-		cout << "Nhap so tiet hoc: " << endl;
-		getline(cin, ds_cl.ds[cl]->sotiethoc);
-		cout << "Nhap hoc phi: " << endl;
-		cin >> ds_cl.ds[cl]->hocphi;
-		cout << "Da thay doi cap lop. " << endl;
-		system("pause");
-	}
+	hieu_chinh_1_cap_lop(ds_cl);
+	//doc_file_dscl(ds_cl);
 
 }
+
+//================================QUAN LY LOP HOC============================
 //==========================================Them lop hoc===========================
 
 bool kt_ma_LH_trung(DSLH ds_lh, string ma) {
@@ -174,9 +261,11 @@ bool kt_trang_thai(DSLH ds_lh, int y)
 		return true;
 	}
 }
-void them_lop_hoc(LH& lh, DSLH &ds_lh)
+void them_lop_hoc( DSLH& ds_lh, DSCL& ds_cl, LH &lh)
 {
+	
 	string x;
+	string t;
 	int y;
 	string z;
 	cout << "\nNhap ma lop hoc can them: ";
@@ -191,7 +280,10 @@ void them_lop_hoc(LH& lh, DSLH &ds_lh)
 	{
 		lh.malop = x;
 		cout << "Nhap so phong hoc: ";
-		cin >> lh.phonghoc;
+		//cin.ignore();
+		cin >> t;
+		lh.phonghoc = t;
+		cout << lh.phonghoc << t;
 		bool ktt = true;
 		while (ktt == true)
 		{
@@ -212,10 +304,36 @@ void them_lop_hoc(LH& lh, DSLH &ds_lh)
 		LH* p = KhoiTaoNode(lh);
 		them_vao_cuoi(ds_lh, p);
 		ds_lh.sl++;
+		
 	}
-	ofstream fileout;
-	ghi_file_lop_hoc(fileout, ds_lh);
 	
+	
+}
+//==================================
+void link_cl_lh(DSCL &ds_cl, LH& lh, DSLH& ds_lh)
+{
+	string a;
+	cout << "Nhap ma cap lop can them lop hoc: ";
+	cin >> a;	//chuan_hoa_chu(a);
+	int cl = kt_ma_cl(a, ds_cl);
+
+	if (cl < 0) {
+		cout << "Cap lop khong ton tai" << endl;
+		system("pause");
+	}
+	else
+	{
+		
+		them_lop_hoc( ds_lh, ds_cl,lh);
+		LH *p = KhoiTaoNode(lh);
+		them_vao_cuoi(ds_cl.ds[cl]->DSlop_hoc, p);
+		//ds_cl.ds[cl]->DSlop_hoc = ds_lh;
+		ofstream fileout;
+		CL macl;
+		macl.macaplop = a;
+		ghi_file_lop_hoc(fileout, ds_lh, macl);
+	}
+	system("pause");
 }
 //==================================In danh sach lop hoc==================================
 void xuat_lop_hoc(DSLH ds_lh)
@@ -524,6 +642,8 @@ HocVien* kt_ma_hv(tree t, string ma)
 		return NULL;
 	}
 }
+
+//============================QUAN LY DIEM======================================
 //============================Nhap diem hoc vien =============================
 void nhap_diem(DSHV& ds_hv, DSD &ds_diem)
 {
@@ -637,7 +757,29 @@ void in_diem(DSD ds_diem, DSHV ds_hv)
 	}
 }
 
+//=======================IN DANH SACH LOP HOC THEO TUNG CAP LOP=========================
+void in_ds_lophoc_theo_caplop(DSCL ds_cl)
+{
+	string a;
+	cout << "Nhap ma cap lop can xuat thong tin lop hoc: ";
+	cin >> a;	//chuan_hoa_chu(a);
+	int cl = kt_ma_cl(a, ds_cl);
 
+	if (cl < 0) {
+		cout << "Cap lop khong ton tai" << endl;
+		system("pause");
+	}
+	else
+	{
+		for (LH* k = ds_cl.ds[cl]->DSlop_hoc.phead; k != NULL; k = k->pnext)
+		{
+			cout << "==============lOP HOC------------" << endl;
+			cout << "Ma lop: " << k->malop << endl;;
+			cout << "Phong hoc: " << k->phonghoc << endl;
+			cout << "Trang thai: " << k->trangthai << endl;
+		}
+	}
+}
 //======================================
 void menu()
 {
@@ -655,7 +797,10 @@ void menu()
 	//=====load file=====
 	doc_file_dscl(ds_cl);
 	doc_file_hv(ds_hv);
-	doc_file_lop_hoc(ds_lh);
+	doc_file_lop_hoc(ds_lh,ds_cl);
+
+	//=====================
+	//xoa_cap_lop_trung(ds_cl);
 	//==============
 	while (kt)
 	{
@@ -684,6 +829,9 @@ void menu()
 		cout << "=========== Quan ly diem ==============" << endl;
 		cout << "12. Nhap diem hoc vien. " << endl;
 		cout << "13. In diem hoc vien. " << endl;
+
+		cout << "14.In thong tin lop hoc theo tung cap lop" << endl;
+		
 		cout << "0. Thoat" << endl;
 		int luachon;
 		cout << "   Nhap lua chon : "; cin >> luachon;
@@ -761,7 +909,12 @@ void menu()
 		}
 		case 9:
 		{
-			them_lop_hoc(lh, ds_lh);
+			link_cl_lh(ds_cl, lh, ds_lh);
+			//=======================
+			
+			//======================
+			
+			/*them_lop_hoc(lh, ds_lh);*/
 			system("pause");
 			break;
 		}
@@ -788,6 +941,13 @@ void menu()
 		{
 			
 			in_diem(danh_sach_diem ,ds_hv);
+			system("pause");
+			break;
+		}
+		case 14:
+		{
+
+			in_ds_lophoc_theo_caplop(ds_cl);
 			system("pause");
 			break;
 		}

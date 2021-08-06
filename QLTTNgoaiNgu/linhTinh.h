@@ -1,51 +1,51 @@
 #pragma once
 #include "CTDL.h"
-void chuan_hoa_chu(string a)
-{
-	//xu li khoang trang dau
-	while (a[0] == ' ')
-	{
-		a.erase(a.begin() + 0);
-
-	}
-	while (a[a.length() - 1] == ' ')
-	{
-		a.erase(a.begin() + a.length() - 1);
-	}
-	//xoa khoang trang giua
-	for (int i = 0; i < a.length(); i++)
-	{
-		if (a[i] == ' ' && a[i+1] == ' ')
-		{
-			a.erase(a.begin() + i + 1);
-			i--;
-		}
-	}
-	//chuan hoa ki tu
-	if (a[0] >= 97 && a[0] <= 122)
-	{
-		a[0] -= 32;
-	}
-	for (int i = 1; i < a.length(); i++)
-	{
-		if (a[i] == ' ')
-		{
-			i++;
-			if (a[i] >= 97 && a[i] <= 122)
-			{
-				a[i] -= 32;
-			}
-		}
-		else
-		{
-			if (a[i] >= 65 && a[i] <= 90)
-			{
-				a[i] += 32;
-			}
-		}
-	}
-
-}
+//void chuan_hoa_chu(string a)
+//{
+//	//xu li khoang trang dau
+//	while (a[0] == ' ')
+//	{
+//		a.erase(a.begin() + 0);
+//
+//	}
+//	while (a[a.length() - 1] == ' ')
+//	{
+//		a.erase(a.begin() + a.length() - 1);
+//	}
+//	//xoa khoang trang giua
+//	for (int i = 0; i < a.length(); i++)
+//	{
+//		if (a[i] == ' ' && a[i+1] == ' ')
+//		{
+//			a.erase(a.begin() + i + 1);
+//			i--;
+//		}
+//	}
+//	//chuan hoa ki tu
+//	if (a[0] >= 97 && a[0] <= 122)
+//	{
+//		a[0] -= 32;
+//	}
+//	for (int i = 1; i < a.length(); i++)
+//	{
+//		if (a[i] == ' ')
+//		{
+//			i++;
+//			if (a[i] >= 97 && a[i] <= 122)
+//			{
+//				a[i] -= 32;
+//			}
+//		}
+//		else
+//		{
+//			if (a[i] >= 65 && a[i] <= 90)
+//			{
+//				a[i] += 32;
+//			}
+//		}
+//	}
+//
+//}
 HocVien* khoi_tao_node_hoc_vien()
 {
 	HocVien* p = new HocVien;
@@ -80,7 +80,9 @@ LH* KhoiTaoNode(LH lh)
 		return NULL;
 	}
 	p->malop = lh.malop;
+	p->phonghoc = lh.phonghoc;
 	p->trangthai = lh.trangthai;
+
 	p->pnext = NULL;
 	return p;
 }
@@ -133,4 +135,15 @@ void them_vao_cuoi_diem(DSD& ds_diem, DIEM* p)
 			}
 		}
 	}
+}
+int kt_ma_cl(string a, DSCL ds_cl)
+{
+	for (int i = 0; i < ds_cl.sl; i++)
+	{
+		if (ds_cl.ds[i]->macaplop == a)
+		{
+			return i;
+		}
+	}
+	return -1;
 }

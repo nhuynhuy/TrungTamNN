@@ -79,13 +79,13 @@ struct CapLop
 	string sotiethoc;
 	double hocphi;
 	bool kt; //true: da ton tai, false: chua ton tai
-	LH *DSLopHoc;
+	DSLH DSlop_hoc;
 };
 typedef struct CapLop CL;
 
 struct dsCapLop
 {
-	CL* ds[100];
+	CL* ds[1000];
 	int sl = 0;
 
 };
