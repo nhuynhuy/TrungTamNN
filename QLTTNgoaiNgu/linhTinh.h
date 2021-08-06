@@ -102,3 +102,35 @@ void them_vao_cuoi(DSLH& ds_lh, LH* p)
 		}
 	}
 }
+DIEM* khoi_tao_node_diem(DIEM diem)
+{
+	
+	DIEM* p = new DIEM;
+	if (p == NULL)
+	{
+		cout << "\n khong du bo nho";
+		return NULL;
+	}
+	p->ki_nang = diem.ki_nang;
+	p->diem_so = diem.diem_so;
+	p->pnext = NULL;
+	return p;
+}
+void them_vao_cuoi_diem(DSD& ds_diem, DIEM* p)
+{
+	if (ds_diem.phead == NULL)
+	{
+		ds_diem.phead = p;
+	}
+	else
+	{
+		for (DIEM* k = ds_diem.phead; ; k = k->pnext)
+		{
+			if (k->pnext == NULL)
+			{
+				k->pnext = p;
+				break;
+			}
+		}
+	}
+}

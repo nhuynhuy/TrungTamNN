@@ -22,8 +22,9 @@ bool kt_ma_hv_trung(tree t, string ma);
 void hieu_chinh_hv(DSHV& ds_hv);
 void hieu_chinh_1_hv(tree t, string ma);
 //=======================Diem============================
-DIEM* khoi_tao_node_diem();
-HocVien* kt_ma_hv(tree t, string ma);
+//DIEM* khoi_tao_node_diem();
+//HocVien* kt_ma_hv(tree t, string ma);
+void nhap_diem_1_hoc_vien(tree t, string ma);
 //================them cap lop======================================
 void them_cap_lop(DSCL& ds_cl)
 {
@@ -165,7 +166,7 @@ bool kt_ma_LH_trung(DSLH ds_lh, string ma) {
 
 bool kt_trang_thai(DSLH ds_lh, int y)
 {
-	if (y != 1 && y != 2 && y != 3)
+	if (y != 0 && y != 1 && y != 2 && y != 3)
 	{
 		return false;
 	}
@@ -177,6 +178,7 @@ void them_lop_hoc(LH& lh, DSLH &ds_lh)
 {
 	string x;
 	int y;
+	string z;
 	cout << "\nNhap ma lop hoc can them: ";
 	cin >> x;
 	bool kt = kt_ma_LH_trung(ds_lh, x);
@@ -188,6 +190,8 @@ void them_lop_hoc(LH& lh, DSLH &ds_lh)
 	else
 	{
 		lh.malop = x;
+		cout << "Nhap so phong hoc: ";
+		cin >> lh.phonghoc;
 		bool ktt = true;
 		while (ktt == true)
 		{
@@ -210,7 +214,7 @@ void them_lop_hoc(LH& lh, DSLH &ds_lh)
 		ds_lh.sl++;
 	}
 	ofstream fileout;
-	//ghi_file_lop_hoc(fileout, ds_lh);
+	ghi_file_lop_hoc(fileout, ds_lh);
 	
 }
 //==================================In danh sach lop hoc==================================
@@ -225,6 +229,7 @@ void xuat_lop_hoc(DSLH ds_lh)
 		for (LH* k = ds_lh.phead; k != NULL; k = k->pnext)
 		{
 			cout << "Ma lop: " << k->malop << endl;
+			cout << "Phong hoc: " << k->phonghoc << endl;
 			cout << "Trang thai: " << k->trangthai << endl;
 		}
 	}
@@ -313,6 +318,8 @@ void xoa_lop_hoc(DSLH &ds_lh)
 }
 //============================Hieu chinh thong tin lop hoc==================================
 
+//=========================================QUAN LY HOC VIEN =================================================
+
 //==========================================Nhap hoc vien==============================================
 void nhap_hoc_vien(DSHV &ds_hv)
 {
@@ -325,11 +332,12 @@ void nhap_hoc_vien(DSHV &ds_hv)
 	cout << p->mahocvien;
 	them_1_hv(ds_hv.TREE, p);
 	ds_hv.sl++;
+	ghi_file_hoc_vien(ds_hv);
 }
 
 string tao_ma_hv(tree t)
 {
-	string a = "CL0000";
+	string a = "HV0000";
 	do
 	{
 		for ( int i = 2; i < a.length(); i++)
@@ -493,29 +501,7 @@ void hieu_chinh_1_hv(tree t, string ma)
 		}
 	}
 }
-//============================Nhap diem hoc vien =============================
-void nhap_diem(DSHV& ds_hv)
-{
-	string a;
-	cout << "Nhap ma sinh vien can nhap diem"; cin >> a;
-	HocVien* tam = kt_ma_hv(ds_hv.TREE, a);
-	if (tam == NULL)
-	{
-		cout << "Ma hoc vien khong ton tai" << endl;
-
-	}
-	else
-	{
-		HocVien* p = new HocVien;
-		
-	}
-}
-DIEM * khoi_tao_node_diem()
-{
-	DIEM* p = new DIEM;
-	p->pnext = NULL;
-	return p;
-}
+//===============================================
 HocVien* kt_ma_hv(tree t, string ma)
 {
 	if (t != NULL)
@@ -530,7 +516,7 @@ HocVien* kt_ma_hv(tree t, string ma)
 		}
 		else if (t->mahocvien > ma);
 		{
-			kt_ma_hv(t->pleft,ma);
+			kt_ma_hv(t->pleft, ma);
 		}
 	}
 	else
@@ -538,13 +524,131 @@ HocVien* kt_ma_hv(tree t, string ma)
 		return NULL;
 	}
 }
+//============================Nhap diem hoc vien =============================
+void nhap_diem(DSHV& ds_hv, DSD &ds_diem)
+{
+	string a;
+	cout << "Nhap ma hoc vien can nhap diem: "; cin >> a;
+	bool tam = kt_ma_hv_trung(ds_hv.TREE, a);
+	if (tam == false)
+	{
+		cout << "Ma hoc vien khong ton tai" << endl;
+
+	}
+	else
+	{
+		nhap_diem_1_hoc_vien(ds_hv.TREE, a);
+	}
+}
+void nhap_diem_vao_dsd(DSD &ds_diem)
+{
+	DIEM diem;
+	
+	cout << "Nhap diem nghe (0) : ";  cin >> diem.diem_so;
+	DIEM* diem_nghe = khoi_tao_node_diem(diem);
+	them_vao_cuoi_diem(ds_diem, diem_nghe);
+	
+	DIEM diem1;
+	cout << "Nhap diem noi (1) : "; cin >> diem1.diem_so;
+	DIEM* diem_noi = khoi_tao_node_diem(diem1);
+	them_vao_cuoi_diem(ds_diem, diem_noi);
+
+	DIEM diem2;
+	cout << "Nhap diem doc (2) : "; cin >> diem2.diem_so;
+	DIEM* diem_doc = khoi_tao_node_diem(diem2);
+	them_vao_cuoi_diem(ds_diem, diem_doc);
+
+	DIEM diem3;
+	cout << "Nhap diem viet (3) : "; cin >> diem3.diem_so;
+	DIEM* diem_viet = khoi_tao_node_diem(diem3);
+	them_vao_cuoi_diem(ds_diem, diem_viet);
+}
+void nhap_diem_1_hoc_vien( tree t, string ma)
+{
+	if (t != NULL)
+	{
+		if (t->mahocvien == ma)
+		{
+			
+			DSD ds_diem;
+			nhap_diem_vao_dsd(ds_diem);
+			ds_diem.sl++;
+			t->danh_sach_diem = ds_diem;
+			
+		}
+
+		else if (t->mahocvien > ma)
+		{
+			nhap_diem_1_hoc_vien(t->pleft, ma);
+		}
+		else if (t->mahocvien < ma)
+		{
+			nhap_diem_1_hoc_vien(t->pright, ma);
+		}
+	}
+}
+void in_diem_1_hoc_vien(tree t, string ma)
+{
+	if (t != NULL)
+	{
+		if (t->mahocvien == ma)
+		{
+
+			cout << "Diem cua hoc vien " << ma << " gom nghe noi doc viet lan luot la: ";
+			for (DIEM* k = t->danh_sach_diem.phead; k != NULL; k = k->pnext)
+			{
+
+				cout << " | ";
+				//k->diem_so;
+				cout << k->diem_so;
+				
+				break;
+
+			}
+
+
+
+		}
+
+		else if (t->mahocvien > ma)
+		{
+			in_diem_1_hoc_vien(t->pleft, ma);
+		}
+		else if (t->mahocvien < ma)
+		{
+			in_diem_1_hoc_vien(t->pright, ma);
+		}
+	}
+}
+void in_diem(DSD ds_diem, DSHV ds_hv)
+{
+	string ma;
+	cout << "Nhap ma hoc vien can in diem:  "; cin >> ma;
+	bool tam = kt_ma_hv_trung(ds_hv.TREE, ma);
+	if (tam == false)
+	{
+		cout << "Ma hoc vien khong ton tai! " << endl;
+
+	}
+	else
+	{
+		in_diem_1_hoc_vien(ds_hv.TREE, ma);
+		
+	}
+}
+
+
 //======================================
 void menu()
 {
+	
 	//=====khia boa bien ==
 	DSCL ds_cl;
 	DSHV ds_hv;
 	DSLH ds_lh;
+	DSD ds_diem;
+	DSD danh_sach_diem;
+	DIEM diem;
 	LH lh;
 	bool kt = true;
 
@@ -564,18 +668,22 @@ void menu()
 		cout << "2. Xuat danh sach cap lop. " << endl;
 		cout << "3. Xoa cap lop. " << endl;
 		cout << "4. Hieu chinh cap lop. " << endl;
+
 		cout << "=========== Quan ly hoc vien ==============" << endl;
 		cout << "5. Nhap hoc vien. " << endl;
 		cout << "6. In danh sach hoc vien. " << endl;
 		cout << "7. Xoa hoc vien. " << endl;
 		cout << "8. Hieu chinh thong tin hoc vien. " << endl;
-		cout << "=========== Quan ly diem ==============" << endl;
-		cout << "9. Nhap diem hoc vien. " << endl;
+		
+		
 		cout << "=========== Quan ly lop hoc ==============" << endl;
-		cout << "10. Them lop hoc. " << endl;
-		cout << "11. Xuat danh sach lop hoc. " << endl;
-		cout << "12. Xoa lop hoc. " << endl;
+		cout << "9. Them lop hoc. " << endl;
+		cout << "10. Xuat danh sach lop hoc. " << endl;
+		cout << "11. Xoa lop hoc. " << endl;
 
+		cout << "=========== Quan ly diem ==============" << endl;
+		cout << "12. Nhap diem hoc vien. " << endl;
+		cout << "13. In diem hoc vien. " << endl;
 		cout << "0. Thoat" << endl;
 		int luachon;
 		cout << "   Nhap lua chon : "; cin >> luachon;
@@ -651,22 +759,35 @@ void menu()
 			system("pause");
 			break;
 		}
-		case 10:
+		case 9:
 		{
 			them_lop_hoc(lh, ds_lh);
-			//ghi_file_lop_hoc(fileout, ds_lh.data);
+			system("pause");
+			break;
+		}
+		case 10:
+		{
+			xuat_lop_hoc(ds_lh);
+			
 			system("pause");
 			break;
 		}
 		case 11:
 		{
-			xuat_lop_hoc(ds_lh);
+			xoa_lop_hoc(ds_lh);
 			system("pause");
 			break;
 		}
 		case 12:
 		{
-			xoa_lop_hoc(ds_lh);
+			nhap_diem(ds_hv,danh_sach_diem);
+			system("pause");
+			break;
+		}
+		case 13:
+		{
+			
+			in_diem(danh_sach_diem ,ds_hv);
 			system("pause");
 			break;
 		}

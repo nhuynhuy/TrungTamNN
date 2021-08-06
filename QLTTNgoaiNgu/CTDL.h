@@ -5,14 +5,15 @@
 #include <ctime>
 #include <conio.h>
 #include <fstream>
-#include<vector>
+#include <vector>
 using namespace std;
 
 //============quan ly diem=========
 struct Diem
 {
-	int ki_nang;
-	int diem_so;//nghe noi doc viet  1 2 3 4
+	//string mhv;
+	int ki_nang;//nghe noi doc viet  1 2 3 4
+	int diem_so;
 
 	Diem* pnext;
 };
@@ -33,8 +34,9 @@ struct HocVien
 	string ho;
 	string ten;
 	string phai;
-	//*qllh
-	DIEM dslk_diem;
+	//*qldiem
+	DIEM *pointer_diem;
+	DSD danh_sach_diem;
 	//pointer
 	HocVien* pleft;
 	HocVien* pright;
@@ -52,16 +54,17 @@ struct LopHoc
 {
 	//data
 	string malop;
+	string phonghoc;
 	int trangthai; //0: lop chuan bi mo, 1: lop dang hoc, 2: lop da hoan thanh)
 	//*qllh
-	tree DSHocVien;
+	tree *DSHocVien;
 	//pointer
 	LopHoc *pnext;
 };
 typedef struct LopHoc LH;
 struct DSLopHoc
 {
-	LopHoc *data;
+	//LopHoc *data;
 	LH* phead = NULL;
 	LH* ptail = NULL;
 	int sl = 0;
@@ -76,7 +79,7 @@ struct CapLop
 	string sotiethoc;
 	double hocphi;
 	bool kt; //true: da ton tai, false: chua ton tai
-	LH DSLopHoc;
+	LH *DSLopHoc;
 };
 typedef struct CapLop CL;
 
